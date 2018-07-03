@@ -65,15 +65,15 @@ namespace FileContextCore.Query.Internal
                         t.Rows.Select(
                             vs =>
                             {
-                                ValueBuffer valueBuffer = new ValueBuffer(vs);
+                                MaterializationContext materializationContext = new MaterializationContext(new ValueBuffer(vs), queryContext.Context);
 
                                 return (TEntity)queryContext
                                     .QueryBuffer
                                     .GetEntity(
                                         key,
                                         new EntityLoadInfo(
-                                            valueBuffer,
-                                            vr => materializer(t.EntityType, vr)),
+                                            materializationContext,
+                                            vr => materializer(t.EntityType, vr.ValueBuffer)),
                                         queryStateManager,
                                         throwOnNullKey: false);
                             }));

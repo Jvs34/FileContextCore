@@ -31,7 +31,7 @@ namespace FileContextCore.Storage.Internal
 		private readonly FileContextOptionsExtension options;
 
 		private IEntityType entityType;
-		
+
 		private IFileManager fileManager;
         private ISerializer serializer;
         private string filetype;
@@ -166,7 +166,7 @@ namespace FileContextCore.Storage.Internal
                     }
                 }
 
-                if (!idCache.LastIds.TryAdd(entityType.Name, values))
+                if (!idCache.LastIds.ContainsKey(entityType.Name))
                 {
 					idCache.LastIds[entityType.Name] = values;
                 }

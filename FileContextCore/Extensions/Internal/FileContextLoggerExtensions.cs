@@ -26,12 +26,12 @@ namespace FileContextCore.Extensions.Internal
         {
             EventDefinition definition = FileContextStrings.LogTransactionsNotSupported;
 
-            definition.Log(diagnostics);
+            definition.Log(diagnostics, WarningBehavior.Log);
 
             if (diagnostics.DiagnosticSource.IsEnabled(definition.EventId.Name))
             {
                 diagnostics.DiagnosticSource.Write(
-                    definition.EventId.Name, 
+                    definition.EventId.Name,
                     new EventData(
                         definition,
                         (d, p) => ((EventDefinition)d).GenerateMessage()));
