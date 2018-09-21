@@ -238,6 +238,8 @@ namespace FileContextCore.Storage.Internal
                 fileManager = new DefaultFileManager(entityType, filetype, options.DatabaseName);
             }
 
+			fileManager.SetDatabasePath( options.DatabasePath );
+
             UpdateMethod = new Action<Dictionary<TKey, object[]>>((list) =>
             {
                 string cnt = serializer.Serialize(list);
