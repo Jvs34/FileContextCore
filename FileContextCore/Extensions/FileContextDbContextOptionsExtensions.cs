@@ -32,7 +32,7 @@ namespace FileContextCore.Extensions
 		/// <returns> The options builder so that further configuration can be chained. </returns>
 		public static DbContextOptionsBuilder<TContext> UseFileContext<TContext>(
 			[NotNull] this DbContextOptionsBuilder<TContext> optionsBuilder,
-			string serializer = "json", string filemanager = "default")
+			string serializer = "json", string filemanager = "default" )
 			where TContext : DbContext
 			=> (DbContextOptionsBuilder<TContext>)UseFileContext(
 				(DbContextOptionsBuilder)optionsBuilder, serializer, filemanager);
@@ -49,14 +49,14 @@ namespace FileContextCore.Extensions
 		/// <param name="filemanager">The selection the of the file-manager to encrypt the files for example.</param>
 		/// <returns> The options builder so that further configuration can be chained. </returns>
 		public static DbContextOptionsBuilder UseFileContext(
-			[NotNull] this DbContextOptionsBuilder optionsBuilder, string serializer = "json", string filemanager = "default", string databasename = "")
+			[NotNull] this DbContextOptionsBuilder optionsBuilder, string serializer = "json", string filemanager = "default", string databasename = "" , string databasepath = "appdata" )
 		{
 			Check.NotNull(optionsBuilder, nameof(optionsBuilder));
 
 			FileContextOptionsExtension extension = optionsBuilder.Options.FindExtension<FileContextOptionsExtension>()
 				?? new FileContextOptionsExtension();
 
-			extension = extension.WithSerializerAndFileManager(serializer, filemanager, databasename);
+			extension = extension.WithSerializerAndFileManager(serializer, filemanager, databasename , databasepath );
 
 			((IDbContextOptionsBuilderInfrastructure)optionsBuilder).AddOrUpdateExtension(extension);
 

@@ -11,5 +11,7 @@
         bool Clear();
 
         bool FileExists();
+
+		void SetDatabasePath( string dbpath );
     }
 }

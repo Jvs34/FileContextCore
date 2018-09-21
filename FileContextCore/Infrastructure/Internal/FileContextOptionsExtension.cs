@@ -22,6 +22,7 @@ namespace FileContextCore.Infrastructure.Internal
 
 		private string _logFragment;
 
+		private string _databasepath = "appdata";
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -38,6 +39,8 @@ namespace FileContextCore.Infrastructure.Internal
         {
             _serializer = copyFrom._serializer;
             _filemanager = copyFrom._filemanager;
+			_databasename = copyFrom._databasename;
+			_databasepath = copyFrom._databasepath;
         }
 
         /// <summary>
@@ -56,17 +59,19 @@ namespace FileContextCore.Infrastructure.Internal
 
 		public virtual string DatabaseName => _databasename;
 
+		public virtual string DatabasePath => _databasepath;
 		/// <summary>
 		///     This API supports the Entity Framework Core infrastructure and is not intended to be used
 		///     directly from your code. This API may change or be removed in future releases.
 		/// </summary>
-		public virtual FileContextOptionsExtension WithSerializerAndFileManager(string serializer, string filemanager, string databasename)
+		public virtual FileContextOptionsExtension WithSerializerAndFileManager(string serializer, string filemanager, string databasename , string databasepath )
         {
             FileContextOptionsExtension clone = Clone();
 
             clone._serializer = serializer;
             clone._filemanager = filemanager;
 			clone._databasename = databasename;
+			clone._databasepath = databasepath;
 
 			return clone;
         }

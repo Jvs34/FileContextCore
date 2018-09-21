@@ -11,16 +11,18 @@ namespace FileContextCore.FileManager
         private readonly object thisLock = new object();
 
         IEntityType type;
-        private readonly string filetype;
+		private string databasepath;
+		private readonly string filetype;
         private readonly string key;
 		private readonly string databasename;
 
-        public EncryptedFileManager(IEntityType _type, string _filetype, string _key, string _databasename)
+        public EncryptedFileManager(IEntityType _type, string _filetype, string _key, string _databasename , string _dbpath = "appdata" )
         {
             type = _type;
             filetype = _filetype;
             key = _key;
 			databasename = _databasename;
+			databasepath = _dbpath;
         }
 
         public string GetFileName()
@@ -32,7 +34,7 @@ namespace FileContextCore.FileManager
                 name = name.Replace(c, '_');
             }
 
-			string path = Path.Combine(AppContext.BaseDirectory, "appdata", databasename);
+			string path = Path.Combine(AppContext.BaseDirectory, databasepath , databasename);
 
 			Directory.CreateDirectory(path);
 
@@ -140,5 +142,10 @@ namespace FileContextCore.FileManager
             }
             return str;
         }
-    }
+
+		public void SetDatabasePath( string dbpath )
+		{
+			databasepath = dbpath;
+		}
+	}
 }
