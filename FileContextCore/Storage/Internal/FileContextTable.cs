@@ -177,7 +177,8 @@ namespace FileContextCore.Storage.Internal
         {
             filetype = options.Serializer;
 
-            if (filetype.Length >= 5 && filetype.Substring(0, 5) == "excel")
+#if !JUSTJSON
+			if( filetype.Length >= 5 && filetype.Substring(0, 5) == "excel")
             {
                 string password = "";
 
@@ -212,13 +213,14 @@ namespace FileContextCore.Storage.Internal
                 serializer = new CSVSerializer(entityType);
             }
             else
-            {
-                serializer = new JSONSerializer(entityType);
+#endif
+			{
+				serializer = new JSONSerializer(entityType);
             }
 
             string fmgr = options.FileManager;
-
-            if (fmgr.Length >= 9 && fmgr.Substring(0, 9) == "encrypted")
+#if !JUSTJSON
+			if( fmgr.Length >= 9 && fmgr.Substring(0, 9) == "encrypted")
             {
                 string password = "";
 
@@ -234,8 +236,9 @@ namespace FileContextCore.Storage.Internal
                 fileManager = new PrivateFileManager(entityType, filetype, options.DatabaseName);
             }
             else
-            {
-                fileManager = new DefaultFileManager(entityType, filetype, options.DatabaseName);
+#endif
+			{
+				fileManager = new DefaultFileManager(entityType, filetype, options.DatabaseName);
             }
 
 			fileManager.SetDatabasePath( options.DatabasePath );
